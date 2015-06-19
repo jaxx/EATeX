@@ -1,4 +1,5 @@
 ﻿using EA;
+using EATeX.UI;
 
 namespace EATeX
 {
@@ -24,6 +25,16 @@ namespace EATeX
 
             return "";
         }
+
+        public override void EA_MenuClick(Repository Repository, string MenuLocation, string MenuName, string ItemName)
+        {
+            switch (ItemName)
+            {
+                case AddinMenu.SubItems.About:
+                    new AboutWindow().ShowDialog();
+                    break;
+            }
+        }
     }
 
     public static class AddinMenu
@@ -36,7 +47,7 @@ namespace EATeX
             public const string GeneratePdf = "&Generate PDF document";
             public const string EditTemplate = "&Edit LaTeX template";
             public const string Settings = "&Settings";
-            public const string About = "&About";
+            public const string About = "&About EATeX";
         }
     }
 }

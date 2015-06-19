@@ -7,3 +7,5 @@ http://bellekens.com/2011/01/29/tutorial-create-your-first-c-enterprise-architec
 https://github.com/GeertBellekens/Enterprise-Architect-Add-in-Framework/blob/master/EAAddinFramework/EAAddinBase.cs#L20
 
 http://www.sparxsystems.com/enterprise_architect_user_guide/8.0/automation_and_scripts/addins_2.html
+
+https://github.com/GeertBellekens/Enterprise-Architect-Toolpack
