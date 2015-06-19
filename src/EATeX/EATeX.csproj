@@ -34,13 +34,28 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>eatex.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <Choose>
+    <When Condition="Exists('$(MSBuildProgramFiles32)\Sparx Systems\EA\Interop.EA.dll')">
+      <ItemGroup>
+        <Reference Include="Interop.EA">
+          <HintPath>$(MSBuildProgramFiles32)\Sparx Systems\EA\Interop.EA.dll</HintPath>
+          <EmbedInteropTypes>True</EmbedInteropTypes>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Interop.EA">
+          <HintPath>$(MSBuildProgramFiles32)\Sparx Systems\EA Trial\Interop.EA.dll</HintPath>
+          <EmbedInteropTypes>True</EmbedInteropTypes>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
-    <Reference Include="Interop.EA">
-      <HintPath>..\..\..\Program Files (x86)\Sparx Systems\EA Trial\Interop.EA.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -62,9 +77,6 @@
     <Compile Include="UI\AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="eatex.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
