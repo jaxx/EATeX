@@ -30,8 +30,11 @@ namespace EATeX
         {
             switch (ItemName)
             {
+                case AddinMenu.SubItems.Settings:
+                    new SettingsWindow().ShowDialog();
+                    break;
                 case AddinMenu.SubItems.About:
-                    new AboutDialog().ShowDialog();
+                    new AboutWindow().ShowDialog();
                     break;
             }
         }

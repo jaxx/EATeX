@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace EATeX.UI
 {
-    public partial class AboutDialog : Form
+    public partial class AboutWindow : Form
     {
-        public AboutDialog()
+        public AboutWindow()
         {
             InitializeComponent();
         }
