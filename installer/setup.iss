@@ -34,6 +34,11 @@ const
 var
   MikTexLocalName: String;
 
+function IsMikTexInstalled: Boolean;
+begin
+  Result := True;
+end;
+
 procedure RunMikTexInstaller(downloadPage:TWizardPage);
 var
   ResultCode: Integer;
@@ -42,8 +47,25 @@ begin
     MsgBox('Failed to run MikTex installer.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
 end;
 
+procedure RegisterAddin;
+var
+  RegAsmLocation: String;
+  Command: String;
+  ResultCode: Integer;
+begin
+  // TODO: check .NET framework version and remove hardcoded eatex.dll location
+  RegAsmLocation := ExpandConstant('{win}\Microsoft.NET\Framework\v4.0.30319\regasm');
+  Command := 'C:\eatex\src\EATeX\bin\Debug\EATeX.dll /codebase';
+
+  ShellExec('', RegAsmLocation, Command, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
+end;
+
 procedure InitializeWizard;
 begin
+  // TODO: check if miktex is already installed
+  if IsMikTexInstalled then
+    Exit;
+
   MikTexLocalName := ExpandConstant('{tmp}\miktex_installer.exe');
   ITD_Init;
 
@@ -54,4 +76,10 @@ begin
 
   ITD_DownloadAfter(wpWelcome);
   ITD_AfterSuccess := @RunMikTexInstaller;
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  if CurPageID = wpInstalling then
+    RegisterAddin;
 end;
