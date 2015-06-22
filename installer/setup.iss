@@ -1,7 +1,7 @@
 #include <./it_download.iss>
 
 #define MyAppName "EATeX for Enterprise Architect"
-#define MyAppVersion "0.1"
+#define MyAppVersion "1.0.0"
 #define MyAppURL "https://github.com/jaxx/EATeX"
 
 [Setup]
@@ -11,7 +11,10 @@ AppVersion={#MyAppVersion}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-CreateAppDir=no
+UninstallDisplayName={#MyAppName}
+CreateAppDir=yes
+DefaultDirName={pf}\EATeX
+DisableDirPage=yes
 OutputBaseFilename=eatex_installer
 Compression=lzma
 SolidCompression=yes
@@ -23,9 +26,10 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Root: HKCU; Subkey: "Software\Sparx Systems\EAAddins\EATeX"; ValueType: string; ValueName: ""; ValueData: "EATeX.EATeXAddin"; Flags: uninsdeletekey;
 
 [Files]
-; TODO: add eatex.dll to installer and install it to program files
-; Source: "C:\EATeX\src\EATeX\bin\Debug\EATeX.dll"; DestDir: "{tmp}"; Flags: ignoreversion; BeforeInstall: RunMiktexInstaller;
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+Source: "..\src\EATeX\bin\Debug\EATeX.dll"; DestDir: "{app}"; Flags: ignoreversion;
+
+[UninstallDelete]
+Type: dirifempty; Name: "{app}";
 
 [Code]
 const
@@ -36,13 +40,19 @@ var
   MikTexLocalName: String;
 
 function IsMikTexInstalled: Boolean;
+var
+  RootKey: Integer;
 begin
-  Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'Software\MiKTeX.org\MiKTeX');
+  if IsWin64 then RootKey := HKLM64 else RootKey := HKLM32;
+  Result := RegKeyExists(RootKey, 'Software\MiKTeX.org\MiKTeX');
 end;
 
 function IsEAInstalled: Boolean;
+var
+  RootKey: Integer;
 begin
-  Result := RegKeyExists(HKEY_CURRENT_USER, 'Software\Sparx Systems\EA400\EA');
+  if IsWin64 then RootKey := HKCU64 else RootKey := HKCU32;
+  Result := RegKeyExists(RootKey, 'Software\Sparx Systems\EA400\EA');
 end;
 
 function GetRegAsmLocation: String;
@@ -68,25 +78,33 @@ begin
     MsgBox('Failed to run MikTex installer.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
 end;
 
-procedure RegisterEatexLibrary(DllLocation: String);
+procedure RegisterEATeXLibrary(DllLocation: String);
 var
+  Params: String;
   ResultCode: Integer;
 begin
-  ShellExec('', GetRegAsmLocation, '/codebase ' + DllLocation, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
+  Params := '/codebase ' + AddQuotes(DllLocation);
+
+  if not ShellExec('', GetRegAsmLocation, Params, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode) then
+    MsgBox('Failed to register dll.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
 end;
 
-procedure UnRegisterEatexLibrary(DllLocation: String);
+procedure UnRegisterEATeXLibrary(DllLocation: String);
 var
+  Params: String;
   ResultCode: Integer;
 begin
-  ShellExec('', GetRegAsmLocation, '/u ' + DllLocation, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
+  Params := '/u ' + AddQuotes(DllLocation);
+
+  if not ShellExec('', GetRegAsmLocation, Params, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode) then
+    MsgBox('Failed to unregister dll.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
 end;
 
 procedure InitializeWizard;
 begin
   if not IsEAInstalled then
   begin
-    MsgBox('You must install Enterprise Architect first before continuing this installation.', mbError, MB_OK);
+    MsgBox('This application requires Sparx Systems Enterprise Architect to be installed on this computer. Installation aborted.', mbError, MB_OK);
     Abort;
   end;
 
@@ -105,8 +123,14 @@ begin
   ITD_AfterSuccess := @RunMikTexInstaller;
 end;
 
-procedure CurPageChanged(CurPageID: Integer);
+procedure CurStepChanged(CurStep: TSetupStep);
 begin
-  if CurPageID = wpInstalling then
-    RegisterEatexLibrary('C:\EATeX\src\EATeX\bin\Debug\EATeX.dll');
+  if CurStep = ssPostInstall then
+    RegisterEATeXLibrary(ExpandConstant('{app}\EATeX.dll'));
+end;
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usUninstall then
+    UnRegisterEATeXLibrary(ExpandConstant('{app}\EATeX.dll'));
 end;
