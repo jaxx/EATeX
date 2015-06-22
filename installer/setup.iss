@@ -20,10 +20,11 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Registry]
-Root: HKCU; Subkey: "Software\Sparx Systems\EAAddins\EATeX"; ValueType: string; ValueName: ""; ValueData: "EATeX.EATeXAddin"
+Root: HKCU; Subkey: "Software\Sparx Systems\EAAddins\EATeX"; ValueType: string; ValueName: ""; ValueData: "EATeX.EATeXAddin"; Flags: uninsdeletekey;
 
 [Files]
-;Source: "{tmp}\miktex_installer.exe"; DestDir: "{tmp}"; Flags: ignoreversion; BeforeInstall: RunMiktexInstaller;
+; TODO: add eatex.dll to installer and install it to program files
+; Source: "C:\EATeX\src\EATeX\bin\Debug\EATeX.dll"; DestDir: "{tmp}"; Flags: ignoreversion; BeforeInstall: RunMiktexInstaller;
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Code]
@@ -36,10 +37,30 @@ var
 
 function IsMikTexInstalled: Boolean;
 begin
-  Result := True;
+  Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'Software\MiKTeX.org\MiKTeX');
 end;
 
-procedure RunMikTexInstaller(downloadPage:TWizardPage);
+function IsEAInstalled: Boolean;
+begin
+  Result := RegKeyExists(HKEY_CURRENT_USER, 'Software\Sparx Systems\EA400\EA');
+end;
+
+function GetRegAsmLocation: String;
+begin
+  Result := '';
+
+  try
+    Result := ExpandConstant('{dotnet40}\regasm.exe');
+  except 
+    try
+      Result := ExpandConstant('{dotnet20}\regasm.exe');
+    except
+      MsgBox('You don''t have .NET framework installed.', mbError, MB_OK);
+    end;
+  end;
+end;
+
+procedure RunMikTexInstaller(DownloadPage: TWizardPage);
 var
   ResultCode: Integer;
 begin
@@ -47,22 +68,28 @@ begin
     MsgBox('Failed to run MikTex installer.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
 end;
 
-procedure RegisterAddin;
+procedure RegisterEatexLibrary(DllLocation: String);
 var
-  RegAsmLocation: String;
-  Command: String;
   ResultCode: Integer;
 begin
-  // TODO: check .NET framework version and remove hardcoded eatex.dll location
-  RegAsmLocation := ExpandConstant('{win}\Microsoft.NET\Framework\v4.0.30319\regasm');
-  Command := 'C:\eatex\src\EATeX\bin\Debug\EATeX.dll /codebase';
+  ShellExec('', GetRegAsmLocation, '/codebase ' + DllLocation, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
+end;
 
-  ShellExec('', RegAsmLocation, Command, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
+procedure UnRegisterEatexLibrary(DllLocation: String);
+var
+  ResultCode: Integer;
+begin
+  ShellExec('', GetRegAsmLocation, '/u ' + DllLocation, '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
 end;
 
 procedure InitializeWizard;
 begin
-  // TODO: check if miktex is already installed
+  if not IsEAInstalled then
+  begin
+    MsgBox('You must install Enterprise Architect first before continuing this installation.', mbError, MB_OK);
+    Abort;
+  end;
+
   if IsMikTexInstalled then
     Exit;
 
@@ -81,5 +108,5 @@ end;
 procedure CurPageChanged(CurPageID: Integer);
 begin
   if CurPageID = wpInstalling then
-    RegisterAddin;
+    RegisterEatexLibrary('C:\EATeX\src\EATeX\bin\Debug\EATeX.dll');
 end;
