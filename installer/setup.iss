@@ -23,7 +23,8 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Registry]
-Root: HKCU; Subkey: "Software\Sparx Systems\EAAddins\EATeX"; ValueType: string; ValueName: ""; ValueData: "EATeX.EATeXAddin"; Flags: uninsdeletekey;
+Root: HKCU32; Subkey: "Software\Sparx Systems\EAAddins\EATeX"; ValueType: string; ValueName: ""; ValueData: "EATeX.EATeXAddin"; Flags: uninsdeletekey; Check: not IsWin64();
+Root: HKCU64; Subkey: "Software\Sparx Systems\EAAddins\EATeX"; ValueType: string; ValueName: ""; ValueData: "EATeX.EATeXAddin"; Flags: uninsdeletekey; Check: IsWin64();
 
 [Files]
 Source: "..\src\EATeX\bin\Debug\EATeX.dll"; DestDir: "{app}"; Flags: ignoreversion;
@@ -38,22 +39,29 @@ const
   MikTex64BitDownloadUrl = 'http://ctan.sharelatex.com/tex-archive/systems/win32/miktex/setup/basic-miktex-x64.exe';
 
 var
-  MikTexLocalName: String;
-
-function IsMikTexInstalled: Boolean;
-var
-  RootKey: Integer;
-begin
-  if IsWin64 then RootKey := HKLM64 else RootKey := HKLM32;
-  Result := RegKeyExists(RootKey, 'Software\MiKTeX.org\MiKTeX');
-end;
+  MikTexTempName: String;
 
 function IsEAInstalled: Boolean;
-var
-  RootKey: Integer;
 begin
-  if IsWin64 then RootKey := HKCU64 else RootKey := HKCU32;
-  Result := RegKeyExists(RootKey, 'Software\Sparx Systems\EA400\EA');
+  // on 64-bit windows we need to check both 32-bit and 64-bit installation 
+  if IsWin64 then
+    Result := RegKeyExists(HKCU32, 'Software\Sparx Systems\EA400\EA') or
+              RegKeyExists(HKCU64, 'Software\Sparx Systems\EA400\EA')
+  else
+    Result := RegKeyExists(HKCU32, 'Software\Sparx Systems\EA400\EA');
+end;
+
+function IsMikTexInstalled: Boolean;
+begin
+  // on 64-bit windows we need to check both 32-bit and 64-bit installation 
+  if IsWin64 then
+    Result := RegKeyExists(HKLM32, 'Software\MiKTeX.org\MiKTeX') or
+              RegKeyExists(HKLM64, 'Software\MiKTeX.org\MiKTeX') or
+              RegKeyExists(HKCU32, 'Software\MiKTeX.org\MiKTeX') or
+              RegKeyExists(HKCU64, 'Software\MiKTeX.org\MiKTeX')
+  else
+    Result := RegKeyExists(HKLM32, 'Software\MiKTeX.org\MiKTeX') or
+              RegKeyExists(HKCU32, 'Software\MiKTeX.org\MiKTeX');
 end;
 
 function GetRegAsmLocation: String;
@@ -66,7 +74,7 @@ begin
     try
       Result := ExpandConstant('{dotnet20}\regasm.exe');
     except
-      MsgBox('You don''t have .NET framework installed.', mbError, MB_OK);
+      MsgBox('.NET framework 2.0 or 4.0 must be installed on your system.', mbError, MB_OK);
     end;
   end;
 end;
@@ -75,7 +83,7 @@ procedure RunMikTexInstaller(DownloadPage: TWizardPage);
 var
   ResultCode: Integer;
 begin
-  if not Exec(MikTexLocalName, '', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode) then
+  if not Exec(MikTexTempName, '', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode) then
     MsgBox('Failed to run MikTex installer.' + #13#10 + SysErrorMessage(ResultCode), mbError, MB_OK);
 end;
 
@@ -105,20 +113,20 @@ procedure InitializeWizard;
 begin
   if not IsEAInstalled then
   begin
-    MsgBox('This application requires Sparx Systems Enterprise Architect to be installed on this computer. Installation aborted.', mbError, MB_OK);
+    MsgBox('This application requires Sparx Systems Enterprise Architect to be installed on this computer.' + #13#10 + 'Installation aborted.', mbError, MB_OK);
     Abort;
   end;
 
   if IsMikTexInstalled then
     Exit;
 
-  MikTexLocalName := ExpandConstant('{tmp}\miktex_installer.exe');
+  MikTexTempName := ExpandConstant('{tmp}\miktex_installer.exe');
   ITD_Init;
 
   if IsWin64 then
-    ITD_AddFile(MikTex64BitDownloadUrl, MikTexLocalName)
+    ITD_AddFile(MikTex64BitDownloadUrl, MikTexTempName)
   else
-    ITD_AddFile(MikTex32BitDownloadUrl, MikTexLocalName);
+    ITD_AddFile(MikTex32BitDownloadUrl, MikTexTempName);
 
   ITD_DownloadAfter(wpWelcome);
   ITD_AfterSuccess := @RunMikTexInstaller;

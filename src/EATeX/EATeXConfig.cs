@@ -24,7 +24,7 @@ namespace EATeX
 
         public void Save()
         {
-            throw new NotImplementedException();
+            config.Save();
         }
     }
 }
