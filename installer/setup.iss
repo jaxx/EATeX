@@ -27,6 +27,7 @@ Root: HKCU; Subkey: "Software\Sparx Systems\EAAddins\EATeX"; ValueType: string; 
 
 [Files]
 Source: "..\src\EATeX\bin\Debug\EATeX.dll"; DestDir: "{app}"; Flags: ignoreversion;
+Source: "..\src\EATeX\bin\Debug\EATeX.dll.config"; DestDir: "{app}"; Flags: ignoreversion;
 
 [UninstallDelete]
 Type: dirifempty; Name: "{app}";
