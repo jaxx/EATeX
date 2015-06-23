@@ -22,6 +22,7 @@ namespace EATeX.UI
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 txtTexLocation.Text = openFileDialog.FileName;
+                configuration.Write("texPath", openFileDialog.FileName);
             }
         }
 
@@ -32,6 +33,7 @@ namespace EATeX.UI
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 txtTemplateLocation.Text = openFileDialog.FileName;
+                configuration.Write("templatePath", openFileDialog.FileName);
             }
         }
     }
