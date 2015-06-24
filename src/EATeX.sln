@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EATeX", "EATeX\EATeX.csproj", "{B3023359-747C-4510-AF35-F851F322CF98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EATeX.TempLaTex", "EATeX.TempLaTex\EATeX.TempLaTex.csproj", "{1BD00EC6-876C-46D2-8804-E0894E79C24B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B3023359-747C-4510-AF35-F851F322CF98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3023359-747C-4510-AF35-F851F322CF98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3023359-747C-4510-AF35-F851F322CF98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BD00EC6-876C-46D2-8804-E0894E79C24B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD00EC6-876C-46D2-8804-E0894E79C24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD00EC6-876C-46D2-8804-E0894E79C24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD00EC6-876C-46D2-8804-E0894E79C24B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

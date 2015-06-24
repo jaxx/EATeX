@@ -97,6 +97,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EATeX.TempLaTex\EATeX.TempLaTex.csproj">
+      <Project>{1BD00EC6-876C-46D2-8804-E0894E79C24B}</Project>
+      <Name>EATeX.TempLaTex</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

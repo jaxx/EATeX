@@ -1,4 +1,5 @@
 ﻿using EA;
+using EATeX.TempLaTex;
 using EATeX.UI;
 
 namespace EATeX
@@ -14,6 +15,7 @@ namespace EATeX
                 case AddinMenu.Name:
                     return new[]
                     {
+                        AddinMenu.SubItems.GenerateTex,
                         AddinMenu.SubItems.GeneratePdf,
                         AddinMenu.MenuSeparator,
                         AddinMenu.SubItems.EditTemplate,
@@ -30,6 +32,9 @@ namespace EATeX
         {
             switch (ItemName)
             {
+                case AddinMenu.SubItems.GenerateTex:
+                    var x = new LatexTemplateReader();
+                    break;
                 case AddinMenu.SubItems.Settings:
                     new SettingsWindow().ShowDialog();
                     break;
@@ -47,6 +52,7 @@ namespace EATeX
 
         public static class SubItems
         {
+            public const string GenerateTex = "&Generate LaTeX file...";
             public const string GeneratePdf = "&Generate PDF document";
             public const string EditTemplate = "&Edit LaTeX template";
             public const string Settings = "&Settings";
