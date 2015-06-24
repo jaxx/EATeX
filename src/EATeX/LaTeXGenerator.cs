@@ -29,6 +29,9 @@ namespace EATeX
             foreach (var requirement in package.Element.Requirements.Cast<Requirement>())
                 GenerateRequirementTex(requirement);
 
+            foreach (var diagram in package.Element.Diagrams.Cast<Diagram>())
+                GenerateDiagramTex(diagram);
+
             foreach (var childPackage in package.Packages.Cast<Package>())
                 GeneratePackageTex(childPackage);
         }
@@ -40,6 +43,14 @@ namespace EATeX
             var reqStatus = requirement.Status;
             var reqLastUpdate = requirement.LastUpdate;
             var reqNotes = requirement.Notes;
+        }
+
+        private void GenerateDiagramTex(Diagram diagram)
+        {
+            var diagramName = diagram.Name;
+            var diagramCreated = diagram.CreatedDate;
+            var diagramModified = diagram.ModifiedDate;
+            var diagramNotes = diagram.Notes;
         }
     }
 }
