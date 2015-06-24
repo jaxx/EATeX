@@ -13,3 +13,5 @@ http://www.sparxsystems.com/enterprise_architect_user_guide/8.0/automation_and_s
 https://github.com/GeertBellekens/Enterprise-Architect-Toolpack
 
 http://www.jrsoftware.org/ishelp/index.php
+
+http://www.sparxsystems.com/cgi-bin/yabb/YaBB.cgi?board=Automation
