@@ -29,3 +29,7 @@ Sparx Systems forum - Automation Interface, Add-Ins and Tools:
 Some LaTeX template engine created in C#:
 
 * <https://github.com/whiteleyj/LaTeXTemplate>
+
+LaTeX guide:
+
+* <https://en.wikibooks.org/wiki/LaTeX>
