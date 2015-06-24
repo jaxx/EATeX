@@ -1,11 +1,17 @@
 ﻿using EA;
-using EATeX.TempLaTex;
 using EATeX.UI;
 
 namespace EATeX
 {
     public class EATeXAddin : EAAddinBase
     {
+        private readonly EATeXConfig configuration;
+
+        public EATeXAddin()
+        {
+            configuration = new EATeXConfig();
+        }
+
         public override object EA_GetMenuItems(Repository Repository, string MenuLocation, string MenuName)
         {
             switch (MenuName)
@@ -33,10 +39,11 @@ namespace EATeX
             switch (ItemName)
             {
                 case AddinMenu.SubItems.GenerateTex:
-                    var x = new LatexTemplateReader();
+                    var texGenerator = new LaTeXGenerator(Repository.GetTreeSelectedPackage(), configuration);
+                    texGenerator.Generate();
                     break;
                 case AddinMenu.SubItems.Settings:
-                    new SettingsWindow().ShowDialog();
+                    new SettingsWindow(configuration).ShowDialog();
                     break;
                 case AddinMenu.SubItems.About:
                     new AboutWindow().ShowDialog();

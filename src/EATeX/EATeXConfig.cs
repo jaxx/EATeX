@@ -33,7 +33,7 @@ namespace EATeX
             config.Save();
         }
 
-        private string AssemblyPath
+        private static string AssemblyPath
         {
             get
             {

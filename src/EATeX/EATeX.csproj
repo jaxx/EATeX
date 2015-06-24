@@ -73,6 +73,7 @@
     <Compile Include="EAAddinBase.cs" />
     <Compile Include="EATeXConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LaTeXGenerator.cs" />
     <Compile Include="UI\AboutWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,12 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EATeX.TempLaTex\EATeX.TempLaTex.csproj">
-      <Project>{1BD00EC6-876C-46D2-8804-E0894E79C24B}</Project>
-      <Name>EATeX.TempLaTex</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

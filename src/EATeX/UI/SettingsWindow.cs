@@ -5,11 +5,13 @@ namespace EATeX.UI
 {
     public partial class SettingsWindow : Form
     {
-        private readonly EATeXConfig configuration = new EATeXConfig();
+        private readonly EATeXConfig configuration;
 
-        public SettingsWindow()
+        public SettingsWindow(EATeXConfig configuration)
         {
             InitializeComponent();
+
+            this.configuration = configuration;
 
             txtTexLocation.Text = configuration.Read("texPath");
             txtTemplateLocation.Text = configuration.Read("templatePath");
