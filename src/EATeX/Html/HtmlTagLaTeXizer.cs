@@ -96,6 +96,12 @@ namespace EATeX.Html
                 case HtmlTagType.ListItem:
                     sb.Append(@"\item ");
                     break;
+                case HtmlTagType.Superscript:
+                    sb.Append(@"$^{");
+                    break;
+                case HtmlTagType.Subscript:
+                    sb.Append(@"$_{");
+                    break;
             }
         }
 
@@ -113,6 +119,10 @@ namespace EATeX.Html
                     break;
                 case HtmlTagType.UnorderedList:
                     sb.Append(@"\end{itemize}");
+                    break;
+                case HtmlTagType.Superscript:
+                case HtmlTagType.Subscript:
+                    sb.Append(@"}$");
                     break;
             }
         }

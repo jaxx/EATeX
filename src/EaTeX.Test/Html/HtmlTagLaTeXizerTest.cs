@@ -71,6 +71,20 @@ namespace EaTeX.Test.Html
         }
 
         [Test]
+        public void SubscriptTest()
+        {
+            var text = "10<sub>2</sub>";
+            Assert.AreEqual(@"10$_{2}$", HtmlTagLaTeXizer.Latexize(text));
+        }
+
+        [Test]
+        public void SuperscriptTest()
+        {
+            var text = "10<sup>2</sup>";
+            Assert.AreEqual(@"10$^{2}$", HtmlTagLaTeXizer.Latexize(text));
+        }
+
+        [Test]
         public void EmptyTagTest()
         {
             var text = "<b></b>";
