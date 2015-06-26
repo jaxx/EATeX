@@ -1,8 +1,13 @@
 ﻿namespace EATeX.Html
 {
-    public class HtmlTagAttribute
+    public struct HtmlTagAttribute
     {
-        public string Name { get; set; }
+        public HtmlTagAttributeType Type { get; set; }
         public string Value { get; set; }
+    }
+
+    public enum HtmlTagAttributeType
+    {
+        Color
     }
 }

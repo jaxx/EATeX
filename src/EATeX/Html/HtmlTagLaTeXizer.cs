@@ -22,6 +22,11 @@ namespace EATeX.Html
             { "<font>", new HtmlTag { Type = HtmlTagType.Font } }
         };
 
+        private static readonly Dictionary<string, HtmlTagAttribute> htmlTagAttributes = new Dictionary<string, HtmlTagAttribute>
+        {
+            { "color", new HtmlTagAttribute { Type = HtmlTagAttributeType.Color } }
+        };
+
         public static string Latexize(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
@@ -102,6 +107,22 @@ namespace EATeX.Html
                 case HtmlTagType.Subscript:
                     sb.Append(@"$_{");
                     break;
+                case HtmlTagType.Font:
+                    AddLaTeXAttributeCommand(htmlTag.Attributes, sb);
+                    break;
+            }
+        }
+
+        private static void AddLaTeXAttributeCommand(IEnumerable<HtmlTagAttribute> attributes, StringBuilder sb)
+        {
+            foreach (var attribute in attributes)
+            {
+                switch (attribute.Type)
+                {
+                    case HtmlTagAttributeType.Color:
+                        sb.Append(string.Format(@"\color[HTML]{{{0}}}", attribute.Value));
+                        break;
+                }
             }
         }
 
@@ -155,11 +176,24 @@ namespace EATeX.Html
                 foreach (var attribute in attributes)
                 {
                     var attributeParts = attribute.Split('=');
-                    htmlTag.Attributes.Add(new HtmlTagAttribute { Name = attributeParts[0], Value = attributeParts[1] });
+
+                    var htmlTagAttribute = htmlTagAttributes[attributeParts[0]];
+                    htmlTagAttribute.Value = GetHtmlTagAttributeValue(attributeParts[1], htmlTagAttribute.Type);
+
+                    htmlTag.Attributes = new List<HtmlTagAttribute> {htmlTagAttribute};
                 }
             }
 
             return htmlTag;
+        }
+
+        private static string GetHtmlTagAttributeValue(string rawValue, HtmlTagAttributeType attributeType)
+        {
+            var firstIndexOfQuotationMark = rawValue.IndexOf('"');
+            var lastIndexOfQuotationMark = rawValue.LastIndexOf('"');
+            var value = rawValue.Substring(firstIndexOfQuotationMark + 1, lastIndexOfQuotationMark - firstIndexOfQuotationMark - 1);
+
+            return attributeType == HtmlTagAttributeType.Color ? value.Replace("#", "") : value;
         }
 
         private static string ReadPlainText(char start, TextReader reader)

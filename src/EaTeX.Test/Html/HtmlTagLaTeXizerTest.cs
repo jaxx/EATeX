@@ -85,6 +85,20 @@ namespace EaTeX.Test.Html
         }
 
         [Test]
+        public void FontColorTest()
+        {
+            var text = "<font color=\"#0000FF\">This text is blue.</font>";
+            Assert.AreEqual(@"\color[HTML]{0000FF}This text is blue.", HtmlTagLaTeXizer.Latexize(text));
+        }
+
+        [Test]
+        public void BoldRedFontTest()
+        {
+            var text = "<font color=\"#0000FF\"><b>This text is blue.</b></font>";
+            Assert.AreEqual(@"\color[HTML]{0000FF}\textbf{This text is blue.}", HtmlTagLaTeXizer.Latexize(text));
+        }
+
+        [Test]
         public void EmptyTagTest()
         {
             var text = "<b></b>";
