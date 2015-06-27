@@ -1,4 +1,4 @@
-﻿using EATeX;
+﻿using EATeX.Core;
 using NUnit.Framework;
 
 namespace EaTeX.Test
