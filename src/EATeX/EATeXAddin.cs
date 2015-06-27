@@ -39,7 +39,7 @@ namespace EATeX
             switch (ItemName)
             {
                 case AddinMenu.SubItems.GenerateTex:
-                    var texGenerator = new LaTeXGenerator(Repository.GetTreeSelectedPackage(), configuration);
+                    var texGenerator = new LatexGenerator(Repository.GetTreeSelectedPackage(), configuration);
                     texGenerator.Generate();
                     break;
                 case AddinMenu.SubItems.Settings:

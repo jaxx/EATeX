@@ -3,12 +3,12 @@ using EA;
 
 namespace EATeX
 {
-    public class LaTeXGenerator
+    public class LatexGenerator
     {
         private readonly Package rootPackage;
         private EATeXConfig configuration;
 
-        public LaTeXGenerator(Package package, EATeXConfig configuration)
+        public LatexGenerator(Package package, EATeXConfig configuration)
         {
             rootPackage = package;
             this.configuration = configuration;
