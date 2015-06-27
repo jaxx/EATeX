@@ -50,9 +50,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EATeX.Core\EATeX.Core.csproj">
-      <Project>{CB121930-3E9D-4FA7-9BC9-A449FCDD8E73}</Project>
-      <Name>EATeX.Core</Name>
+    <ProjectReference Include="..\EATeX\EATeX.csproj">
+      <Project>{b3023359-747c-4510-af35-f851f322cf98}</Project>
+      <Name>EATeX</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

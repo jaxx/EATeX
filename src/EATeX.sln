@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{7521
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EaTeX.Test", "EaTeX.Test\EaTeX.Test.csproj", "{F5128023-26C4-4545-B82C-CB7F3C036C2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EATeX.Core", "EATeX.Core\EATeX.Core.csproj", "{CB121930-3E9D-4FA7-9BC9-A449FCDD8E73}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,10 +26,6 @@ Global
 		{F5128023-26C4-4545-B82C-CB7F3C036C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5128023-26C4-4545-B82C-CB7F3C036C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5128023-26C4-4545-B82C-CB7F3C036C2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB121930-3E9D-4FA7-9BC9-A449FCDD8E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB121930-3E9D-4FA7-9BC9-A449FCDD8E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB121930-3E9D-4FA7-9BC9-A449FCDD8E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB121930-3E9D-4FA7-9BC9-A449FCDD8E73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace EATeX.Core
+namespace EATeX
 {
     public static class HtmlLatexizer
     {
