@@ -104,8 +104,19 @@ namespace EaTeX.Test
         [Test]
         public void ShitloadOfTagsTest()
         {
-            //const string text = @"<b><u>I.</u></b><b><u>E-Toimikust:</u></b><b><u></u></b><b><i><u>&lt;E-Toimik</u></i></b><i><u> on</u></i><u> &lt;/teenusepõhine&gt;</u> infosüsteem.";
             Assert.AreEqual(@"\textbf{\underline{I.}}\textbf{\underline{E-Toimikust:}}\textbf{\textit{\underline{&lt;E-Toimik}}}\textit{\underline{ on}}\underline{ &lt;/teenusepõhine&gt;} infosüsteem.", HtmlLatexizer.Latexize("<b><u>I.</u></b><b><u>E-Toimikust:</u></b><b><u></u></b><b><i><u>&lt;E-Toimik</u></i></b><i><u> on</u></i><u> &lt;/teenusepõhine&gt;</u> infosüsteem."));
+        }
+
+        [Test]
+        public void HyperlinkTest()
+        {
+            Assert.AreEqual(@"\href{http://www.google.com/}{This text is link.}", HtmlLatexizer.Latexize("<a href=\"http://www.google.com/\">This text is link.</a>"));
+        }
+
+        [Test]
+        public void RedAndBoldHyperlinkTest()
+        {
+            Assert.AreEqual(@"{\color[HTML]{FF0000}\textbf{\href{http://www.google.com/}{Bold and red link.}}}", HtmlLatexizer.Latexize("<font color=\"#FF0000\"><b><a href=\"http://www.google.com/\">Bold and red link.</a></b></font>"));
         }
     }
 }

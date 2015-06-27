@@ -17,7 +17,8 @@ namespace EATeX
             { "<ul>", "\\begin{itemize}" },
             { "<ol>", "\\begin{enumerate}" },
             { "<li>", "\\item " },
-            { "<font>+color", "{\\color[HTML]{0}" }
+            { "<font>+color", "{\\color[HTML]{0}" },
+            { "<a>+href", "\\href{0}{" }
         };
 
         private static readonly Dictionary<string, string> endTags = new Dictionary<string, string>
@@ -30,7 +31,8 @@ namespace EATeX
             { "</ul>", "\\end{itemize}" },
             { "</ol>", "\\end{enumerate}" },
             { "</li>", string.Empty },
-            { "</font>", "}" }
+            { "</font>", "}" },
+            { "</a>", "}" }
         };
 
         public static string Latexize(string text)
@@ -114,7 +116,7 @@ namespace EATeX
                 tag += (char)current;
             }
 
-            isEndTag = tag.Contains("/");
+            isEndTag = tag.Contains("</");
 
             string[] attributes;
             ReadTagAttributes(ref tag, out attributes);
