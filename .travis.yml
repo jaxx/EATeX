@@ -1,9 +1,9 @@
 language: csharp
-solution: src/EaTeX.sln
+solution: src/EATeX.sln
 install:
   - sudo apt-get install -y gtk-sharp2
-  - nuget restore src/EaTeX.sln
+  - nuget restore src/EATeX.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
-  - xbuild /p:Configuration=Release EaTeX.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe src/EaTeX.Test/bin/Release/EaTeX.Test.dll
+  - xbuild /p:Configuration=Release src/EATeX.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe src/EATeX.Test/bin/Release/EATeX.Test.dll
