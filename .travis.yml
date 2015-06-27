@@ -2,7 +2,7 @@ language: csharp
 solution: EaTeX.sln
 install:
   - sudo apt-get install -y gtk-sharp2
-  - nuget restore EaTeX.sln
+  - nuget restore EaTeX/src/EaTeX.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release EaTeX.sln
