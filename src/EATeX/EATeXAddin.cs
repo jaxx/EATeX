@@ -1,9 +1,10 @@
-﻿using EA;
+﻿using System;
+using EA;
 using EATeX.UI;
 
 namespace EATeX
 {
-    public class EATeXAddin : EAAddinBase
+    public class EATeXAddin : IEAInterop
     {
         private readonly EATeXConfig configuration;
 
@@ -12,9 +13,20 @@ namespace EATeX
             configuration = new EATeXConfig();
         }
 
-        public override object EA_GetMenuItems(Repository Repository, string MenuLocation, string MenuName)
+        public string EA_Connect(Repository repository)
         {
-            switch (MenuName)
+            return null;
+        }
+
+        public void EA_Disconnect()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        public object EA_GetMenuItems(Repository repository, string menuLocation, string menuName)
+        {
+            switch (menuName)
             {
                 case "":
                     return AddinMenu.Name;
@@ -34,12 +46,12 @@ namespace EATeX
             return "";
         }
 
-        public override void EA_MenuClick(Repository Repository, string MenuLocation, string MenuName, string ItemName)
+        public void EA_MenuClick(Repository repository, string menuLocation, string menuName, string itemName)
         {
-            switch (ItemName)
+            switch (itemName)
             {
                 case AddinMenu.SubItems.GenerateTex:
-                    var texGenerator = new LatexGenerator(Repository.GetTreeSelectedPackage(), configuration);
+                    var texGenerator = new LatexGenerator(repository.GetTreeSelectedPackage(), configuration);
                     texGenerator.Generate();
                     break;
                 case AddinMenu.SubItems.Settings:

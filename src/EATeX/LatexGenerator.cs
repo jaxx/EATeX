@@ -21,6 +21,9 @@ namespace EATeX
 
         private void GeneratePackageTex(Package package)
         {
+            if (package.IsModel)
+                return;
+
             var packageName = package.Name;
             var packageCreated = package.Created;
             var packageModified = package.Modified;

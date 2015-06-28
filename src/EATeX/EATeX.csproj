@@ -57,9 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EATeXAddin.cs" />
-    <Compile Include="EAAddinBase.cs" />
     <Compile Include="EATeXConfig.cs" />
     <Compile Include="HtmlLatexizer.cs" />
+    <Compile Include="IEAInterop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatexGenerator.cs" />
     <Compile Include="UI\AboutWindow.cs">
