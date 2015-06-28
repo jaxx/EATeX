@@ -1,4 +1,4 @@
-# EATeX [![Build status](https://travis-ci.org/jaxx/EATeX.svg?branch=master)](https://travis-ci.org/jaxx/EATeX)
+# EATeX <a href="https://travis-ci.org/jaxx/EATeX" target="_blank" title="Build status"><img src="https://travis-ci.org/jaxx/EATeX.svg?branch=master"></a>
 
 EATeX is a plugin for Sparx Systems Enterprise Architect to generate PDF files from .tex template files.
 
