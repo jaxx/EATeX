@@ -6,4 +6,4 @@ install:
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release src/EATeX.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe src/EATeX.Test/bin/Release/EATeX.Test.dll
+  - mono --runtime=v4.5 ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe src/EATeX.Test/bin/Release/EATeX.Test.dll
