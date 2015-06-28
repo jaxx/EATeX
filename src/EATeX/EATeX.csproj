@@ -38,25 +38,11 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <Choose>
-    <When Condition="Exists('$(MSBuildProgramFiles32)\Sparx Systems\EA\Interop.EA.dll')">
-      <ItemGroup>
-        <Reference Include="Interop.EA">
-          <HintPath>$(MSBuildProgramFiles32)\Sparx Systems\EA\Interop.EA.dll</HintPath>
-          <EmbedInteropTypes>True</EmbedInteropTypes>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Interop.EA">
-          <HintPath>$(MSBuildProgramFiles32)\Sparx Systems\EA Trial\Interop.EA.dll</HintPath>
-          <EmbedInteropTypes>True</EmbedInteropTypes>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
   <ItemGroup>
+    <Reference Include="Interop.EA">
+      <HintPath>..\..\lib\Interop.EA.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
