@@ -1,9 +1,10 @@
 language: csharp
-solution: src/EATeX.sln
+solution: ./src/EATeX.sln
+
 install:
-  - sudo apt-get install -y gtk-sharp2
-  - nuget restore src/EATeX.sln
-  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+  - sudo apt-get install nunit-console
+  - nuget restore ./src/EATeX.sln
+
 script:
-  - xbuild /p:Configuration=Release src/EATeX.sln
-  - mono --runtime=v4.5 ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe src/EATeX.Test/bin/Release/EATeX.Test.dll
+  - xbuild ./src/EATeX.sln
+  - nunit-console ./src/EATeX.Test/bin/Debug/EATeX.Test.dll
