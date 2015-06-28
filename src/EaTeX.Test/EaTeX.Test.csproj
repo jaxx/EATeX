@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EATeX\EATeX.csproj">
-      <Project>{b3023359-747c-4510-af35-f851f322cf98}</Project>
+      <Project>{B3023359-747C-4510-AF35-F851F322CF98}</Project>
       <Name>EATeX</Name>
     </ProjectReference>
   </ItemGroup>

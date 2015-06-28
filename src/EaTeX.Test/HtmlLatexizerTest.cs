@@ -1,7 +1,6 @@
-﻿using EATeX;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace EaTeX.Test
+namespace EATeX.Test
 {
     [TestFixture]
     public class HtmlLatexizerTest
