@@ -26,6 +26,9 @@ namespace EATeX
 
         public object EA_GetMenuItems(Repository repository, string menuLocation, string menuName)
         {
+            if (menuLocation != "TreeView")
+                return null;
+
             switch (menuName)
             {
                 case "":
